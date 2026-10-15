@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPSY - Dr. D. Lirious' Mind Maze Escape Room</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- TOP NAVIGATION & HEADER -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="brain-icon">🧠</span>
+            <span class="title">PPSY Escape Room</span>
+        </div>
+        <div id="hud" class="hud hidden">
+            <div class="hud-item">
+                <span class="hud-label">Room:</span>
+                <span id="hud-room-name" class="hud-value">1 / 5</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Time Remaining:</span>
+                <span id="hud-timer" class="hud-value">10:00</span>
+            </div>
+            <div class="hud-item">
+                <span class="hud-label">Score:</span>
+                <span id="hud-score" class="hud-value">0</span>
+            </div>
+            <button id="btn-toggle-sound" class="btn-icon" title="Toggle Sound">🔊</button>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- SCREEN 1: HOMEPAGE / INTRO -->
+        <section id="screen-home" class="card active">
+            <div class="hero-header">
+                <h1>Welcome to PPSY: The Mind Maze!</h1>
+                <p class="subtitle">An Educational Comedy Escape Room in Abnormal Psychology</p>
+            </div>
+
+            <div class="intro-box">
+                <p>⚠️ <strong>Emergency Alert at the Psyche Lab!</strong></p>
+                <p>The eccentric Dr. D. Lirious locked the psychiatric evaluation ward and lost his keys while researching mood disorders and schizophrenia. To unlock each room and escape, you must inspect the patient files and diagnose the clinical situations correctly!</p>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🎯 Learning Outcome</h3>
+                    <p>Differentiate key psychological disorders: <strong>Major Depressive Disorder</strong>, <strong>Bipolar I Disorder</strong>, <strong>Dysthymia</strong>, and <strong>Schizophrenia</strong> based on clinical symptom profiles.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🎮 Game Mode</h3>
+                    <p>5 Escape Chambers | Comedy Theme | 10-Minute Timed or Stress-Free Untimed Mode.</p>
+                </div>
+            </div>
+
+            <div class="mode-selection">
+                <h3>Select Your Mode:</h3>
+                <div class="btn-group">
+                    <button id="btn-start-timed" class="btn btn-primary">⏱️ Start Timed Escape (10 Mins)</button>
+                    <button id="btn-start-untimed" class="btn btn-secondary">♾️ Start Untimed Mode</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: INSTRUCTIONS -->
+        <section id="screen-instructions" class="card hidden">
+            <h2>📜 Lab Manual & Rules of Engagement</h2>
+            
+            <div class="instructions-list">
+                <div class="inst-item">
+                    <span class="inst-num">1</span>
+                    <div>
+                        <strong>Inspect Room Clues:</strong> Click on interactive room props (journals, medical logs, audio clips) to discover patient symptoms.
+                    </div>
+                </div>
+                <div class="inst-item">
+                    <span class="inst-num">2</span>
+                    <div>
+                        <strong>Diagnose at the Terminal:</strong> Open the lock terminal and choose the forced-choice answer that fits the clinical scenario.
+                    </div>
+                </div>
+                <div class="inst-item">
+                    <span class="inst-num">3</span>
+                    <div>
+                        <strong>Scoring System:</strong>
+                        <ul>
+                            <li>+100 Points for correct first attempt</li>
+                            <li>+50 Points on subsequent attempts</li>
+                            <li>Speed Bonus awarded in Timed Mode</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="inst-item">
+                    <span class="inst-num">4</span>
+                    <div>
+                        <strong>Accessibility & Controls:</strong> Keyboard navigable (Tab + Enter) or full touch screen support on mobile devices.
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-center">
+                <button id="btn-enter-room" class="btn btn-primary">🚪 Enter Chamber 1</button>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: GAMEPLAY ROOM CONTAINER -->
+        <section id="screen-game" class="card hidden">
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div id="progress-bar-fill" class="progress-bar-fill"></div>
+            </div>
+
+            <div class="room-header">
+                <h2 id="room-title">Chamber 1: The Gloomy Study</h2>
+                <p id="room-subtitle" class="room-desc">Inspect the interactive evidence to unlock the terminal.</p>
+            </div>
+
+            <!-- Interactive Visual SVG Room Scene -->
+            <div id="room-viewport" class="room-viewport">
+                <!-- SVG Graphics rendered dynamically by JavaScript -->
+            </div>
+
+            <!-- Clue Collection Indicator -->
+            <div class="clue-tracker">
+                <span>Discovered Clues: </span>
+                <span id="clue-count">0 / 2</span>
+            </div>
+
+            <!-- Terminal Unlock Action -->
+            <div class="action-panel">
+                <button id="btn-open-terminal" class="btn btn-accent pulse-btn">🔓 Open Security Terminal</button>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: COMPLETION / RESULTS -->
+        <section id="screen-results" class="card hidden">
+            <div class="results-header">
+                <div class="trophy-icon">🏆</div>
+                <h2>Escaped Successfully!</h2>
+                <p id="results-badge" class="badge">Master Diagnostician</p>
+            </div>
+
+            <div class="results-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Final Score</span>
+                    <span id="final-score" class="stat-value">500</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Accuracy</span>
+                    <span id="final-accuracy" class="stat-value">100%</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Time Taken</span>
+                    <span id="final-time" class="stat-value">04:12</span>
+                </div>
+            </div>
+
+            <h3>📋 Diagnostic Case Review</h3>
+            <div id="case-review-list" class="case-review-list">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="btn-center margin-top">
+                <button id="btn-restart" class="btn btn-primary">🔄 Play Again</button>
+                <button id="btn-home" class="btn btn-secondary">🏠 Return to Home</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL 1: CLUE POPUP -->
+    <div id="modal-clue" class="modal hidden">
+        <div class="modal-content">
+            <button class="modal-close" id="btn-close-clue">&times;</button>
+            <h3 id="modal-clue-title">Examine Evidence</h3>
+            <div id="modal-clue-body" class="modal-body"></div>
+            <div class="btn-center">
+                <button id="btn-dismiss-clue" class="btn btn-secondary">Got It</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: DIAGNOSTIC TERMINAL QUESTION -->
+    <div id="modal-terminal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <button class="modal-close" id="btn-close-terminal">&times;</button>
+            <h3 id="question-room-heading">Chamber Terminal Diagnostic</h3>
+            
+            <div class="scenario-box">
+                <p id="question-scenario">Patient scenario goes here...</p>
+            </div>
+
+            <div id="options-container" class="options-grid">
+                <!-- Answer choice buttons dynamically generated -->
+            </div>
+
+            <!-- Feedback Area -->
+            <div id="feedback-container" class="feedback-box hidden">
+                <h4 id="feedback-title">Feedback</h4>
+                <p id="feedback-text">Explanation...</p>
+                <div class="btn-center">
+                    <button id="btn-next-room" class="btn btn-primary hidden">Proceed to Next Chamber ➔</button>
+                    <button id="btn-try-again" class="btn btn-secondary hidden">Try Diagnostic Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
